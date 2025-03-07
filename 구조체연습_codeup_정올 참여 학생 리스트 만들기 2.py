@@ -37,3 +37,28 @@
 # 950 금강산
 # 999 백두산
 # 1011 한라산
+
+n = int(input())
+arr = []
+
+for i in range(n):
+    command, number, name = input().split()
+    number = int(number)
+    if command == "I":
+        idx = next((idx for idx, itm in enumerate(arr) if number <= itm[0]), -1)
+        if idx != -1:
+            arr.insert(idx, (number, name))
+        else:
+            arr.append((number, name))
+    elif command == "D":
+        idx = next((idx for idx, itm in enumerate(arr) if number == itm[0]), -1)
+        if idx != -1:
+            arr.pop(idx)
+
+a, b, c, d, e = map(int, input().split())
+
+print(arr[a - 1][0], arr[a - 1][1])
+print(arr[b - 1][0], arr[b - 1][1])
+print(arr[c - 1][0], arr[c - 1][1])
+print(arr[d - 1][0], arr[d - 1][1])
+print(arr[e - 1][0], arr[e - 1][1])
