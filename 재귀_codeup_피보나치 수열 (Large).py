@@ -18,13 +18,17 @@
 # 출력 예시
 # 13
 
-# def f(n):
-#     if n in [1, 2]:
-#         return 1
-#     return f(n - 1) + f(n - 2)
-#
+def f(num):
+    if num in [1, 2]:
+        arr[num] = 1
+    else:
+        arr[num] = arr[num - 1] + arr[num - 2]
+
+    if num == n:
+        return
+    f(num + 1)
+
 n = int(input())
-# print(f(n))
-
-arr = [0] * n
-
+arr = [0] * (n + 1)
+f(1)
+print(arr[n] % 10009)
