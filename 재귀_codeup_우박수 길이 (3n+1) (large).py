@@ -1,34 +1,35 @@
 def recur(n):
     if n == 1:
         return 1
-
-    k = 0
-
-    if arr[n] != 0:
-        return arr[n]
-
-    if n % 2 == 0:
-        k = n // 2
+    if n > 10000000:
+        if n % 2 == 0:
+            return recur(n // 2) + 1
+        else:
+            return recur( 3 * n + 1) + 1
     else:
-        k = 3 * n + 1
-    arr[n] = recur(k) + 1
+        if arr[n]:
+            return arr[n]
+        else:
+            if n % 2 == 0:
+                arr[n] = recur(n // 2) + 1
+            else:
+                arr[n] = recur(3 * n + 1) + 1
+            return arr[n]
 
 start, end = map(int, input().split())
 
 max_num = 0
 max_val = float('-inf')
 
-arr = [0] * (end + 1)
+arr = [0] * 10000001
 arr[1] = 1
 
 for i in range(start, end + 1):
-    if arr[i] != 0:
+    if not arr[i]:
         recur(i)
-    print(i, arr[i])
-    # k = recur(i)
-    # print(i, k)
-    # if k > max_val:
-    #     max_val = k
-    #     max_num = i
 
-# print(max_num, max_val)
+    if max_val < arr[i]:
+        max_val = arr[i]
+        max_num = i
+
+print(max_num, max_val)
