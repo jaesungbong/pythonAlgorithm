@@ -17,5 +17,5 @@ def combinations(arr, r):
 
 # 예시 사용
 arr = [1, 2, 3, 4]
-r = 2
+r = 3
 print(combinations(arr, r))

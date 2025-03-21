@@ -21,4 +21,5 @@ import math
 # 4
 
 n = int(input())
-print(format(math.sqrt(n), '.0f'))
+# math.sqrt 로 제곱근 구한 다음, math.floor로 버림처리
+print(math.floor(math.sqrt(n)))
