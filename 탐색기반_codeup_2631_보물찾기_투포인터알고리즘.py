@@ -11,28 +11,24 @@
 
 # 출력 예시
 # 1
-
-def findBomul(nums, s):
-    result = []
-
-    def backtrack(start, path):
-        print("start: {}, len(path):{}".format(start, len(path)))
-        len(path)
-
-        if sum(path) == s:
-            result.append(path)
-            return
-
-        for i in range(start, len(nums)):
-            backtrack(i + 1, path + [nums[i]])
-
-    path = []
-    backtrack(0, path)
-
-    return result
-
-
 n, s = map(int, input().split())
 nums = list(map(int, input().split()))
 
-print(findBomul(nums, s))
+r = 0
+start = 0
+end = 0
+loop = 0
+
+while end != len(nums):
+    loop += 1
+    temp_sum = sum(nums[start:end + 1])
+    if temp_sum < s: # 합이 아직 작을 때
+        end += 1
+    elif temp_sum == s: # 합이 되었을 때
+        r += 1
+        start += 1
+        end += 1
+    elif temp_sum > s:
+        start += 1
+
+print(r)
