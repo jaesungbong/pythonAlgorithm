@@ -1,59 +1,45 @@
-def delay_time(high_way, primary_key, time):
-    for i in range(len(high_way)):
-        if high_way[i][1] == primary_key:
-            if high_way[i][0] == time:
-                high_way[i][0] += 1
-                time += 1
-            else:
-                break
-    return high_way
+# D > A > B > C
+from collections import deque
 
 n = int(input())
 
+way = ["A", "B", "C", "D"]
+ways = [deque() for _ in range(4)]
+left_way = [1, 2, 3, 0] # A일때 B, B일때 C, C일때 D, D일때 A
 min_time = 1000000001
-high_way = []
 
 for i in range(n):
-    time, way = input().split()
-    high_way.append([int(time), way])
-    min_time = min((int(time), min_time))
+    time, direction = input().split()
+    min_time = min(min_time, int(time))
+    for i in range(len(way)):
+        if direction == way[i]:
+            ways[i].append(int(time))
 
-# D > A > B > C
-count = 0
+print(ways)
 
-while count != n:
-    temp_list = [item[1] for item in high_way if item[0] == min_time]
-    if "A" in temp_list and "B" in temp_list and "C" in temp_list and "D" in temp_list:
-        high_way[high_way.index([min_time, "A"])][0] = -1
-        high_way[high_way.index([min_time, "B"])][0] = -1
-        high_way[high_way.index([min_time, "C"])][0] = -1
-        high_way[high_way.index([min_time, "D"])][0] = -1
-        count += 4
-    else:
-        for j in temp_list:
-            if j == "A":
-                if "D" in temp_list:
-                    delay_time(high_way, "A", min_time)
-                else:
-                    count += 1
-            elif j == "B":
-                if "A" in temp_list:
-                    delay_time(high_way, "B", min_time)
-                else:
-                    count += 1
-            elif j == "C":
-                if "B" in temp_list:
-                    delay_time(high_way, "C", min_time)
-                else:
-                    count += 1
-            elif j == "D":
-                if "C" in temp_list:
-                    delay_time(high_way, "D", min_time)
-                else:
-                    count += 1
-    min_time += 1
+result = []
 
-for i in high_way:
-    print(i[0])
+while ways[0] or ways[1] or ways[2] or ways[3]:
+    for i in range(len(ways)):
+        if ways[i] and min_time == ways[i][0]:
+            # 왼쪽에 차량이 있다면 왼쪽과 그 뒤 이어 지는 차량은 모두 +1 해준다.
+            if ways[left_way[i]] and ways[left_way[i]][0] == min_time:
+                temp_time = min_time
+                for j in range(len(ways[left_way[i]])):
+                    if ways[left_way[i]][j] == temp_time:
+                        ways[left_way[i]][j] += 1
+                        temp_time += 1
+                    else:
+                        break
+            result.append(ways[i].popleft())
+            min_time += 1
+    print("A:{}, B:{}, C:{}, D:{}".format(ways[0], ways[1], ways[2], ways[3]))
+    print()
+print(result)
+
+
+
+
+
 
 
