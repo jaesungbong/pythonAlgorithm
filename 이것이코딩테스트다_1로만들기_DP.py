@@ -1,16 +1,16 @@
-def dp(num, memo):
-    if memo[num] or num == 1 or num == 2:
-        return memo[num]
-
-    if num % 5 == 0:
-        memo[num] = min(dp(num, memo), )
-
 n = 26
 
-memo = [0 for i in range(n + 1)]
+d = [0] * 30001
 
-memo[2] = 1
-memo[3] = 1
-memo[5] = 1
+for i in range(2, n + 1):
+    # x 에서 1을 뺀다
+    d[i] = d[i - 1] + 1
 
-dp(n, memo)
+    if i % 5 == 0:
+        d[i] = min(d[i], d[i // 5] + 1)
+    if i % 3 == 0:
+        d[i] = min(d[i], d[i // 3] + 1)
+    if i % 2 == 0:
+        d[i] = min(d[i], d[i // 2] + 1)
+
+print(d[26])
